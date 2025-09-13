@@ -20,10 +20,10 @@ if (!TOKEN || !CHAT_ID) {
 }
 
 // Generic function to forward requests to Telegram
-const forwardToTelegram = async (endpoint, data, headers = {}) => {
+const forwardToTelegram = async (endpoint, data, headers = {}, responseType = 'json') => {
     try {
-        const response = await axios.post(`${API_BASE}/${endpoint}`, data, { headers });
-        return { success: true, data: response.data };
+        const response = await axios.post(`${API_BASE}/${endpoint}`, data, { headers, responseType });
+        return { success: true, data: response.data, headers: response.headers };
     } catch (error) {
         console.error(`Error forwarding to Telegram endpoint: ${endpoint}`, error.response ? error.response.data : error.message);
         return { success: false, error: error.response ? error.response.data : { description: error.message } };
@@ -84,17 +84,42 @@ app.post('/api/sendFile', upload.single('file'), async (req, res) => {
     }
 });
 
-// Route for file info (getFile)
+// MODIFICATION 1: Change getFile to return a proxied path
 app.post('/api/getFile', async (req, res) => {
     const response = await forwardToTelegram('getFile', req.body);
     if (response.success) {
-        // Prepend the full path for the client
-        response.data.result.file_path = `https://api.telegram.org/file/bot${TOKEN}/${response.data.result.file_path}`;
+        // Change the file path to point to our new proxy route instead of directly to Telegram
+        response.data.result.file_path = `/api/file/${response.data.result.file_path}`;
         res.status(200).json(response.data);
     } else {
         res.status(500).json(response.error);
     }
 });
+
+// MODIFICATION 2: Add a new route to proxy the file request
+app.get('/api/file/:filePath(*)', async (req, res) => {
+    const { filePath } = req.params;
+    const fileUrl = `https://api.telegram.org/file/bot${TOKEN}/${filePath}`;
+
+    try {
+        // Fetch the file from Telegram as a stream
+        const response = await axios({
+            method: 'get',
+            url: fileUrl,
+            responseType: 'stream'
+        });
+
+        // Set the content type header from Telegram's response
+        res.setHeader('Content-Type', response.headers['content-type']);
+        
+        // Pipe the file stream directly to the client's response
+        response.data.pipe(res);
+    } catch (error) {
+        console.error('Error proxying file:', error.message);
+        res.status(500).send('Error fetching file');
+    }
+});
+
 
 // Route to delete a message
 app.post('/api/deleteMessage', async (req, res) => {
