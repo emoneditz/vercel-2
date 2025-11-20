@@ -4,20 +4,23 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
     <title>Lamuuuuuuuuu</title>
-    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <!-- Emoji Picker Library -->
     <script type="module" src="https://cdn.jsdelivr.net/npm/emoji-picker-element@^1/index.js"></script>
     <style>
         :root {
             --bg-primary: #000000;
-            --bg-secondary: #1a1a1a;
-            --bubble-me: #2d2d2d;
-            --bubble-emon: #333333;
+            --bg-secondary: #1a0000;
+            --bubble-me: #8B0000;
+            --bubble-emon: #2d0000;
             --text-primary: #ffffff;
-            --text-secondary: #a0a0a0;
-            --border-color: #404040;
-            --input-bg: #2d2d2d;
+            --text-secondary: #ff6b6b;
+            --border-color: #8B0000;
+            --input-bg: #1a0000;
+            --accent-red: #DC143C;
+            --bg-gradient: radial-gradient(circle at 85% -15%, rgba(255, 90, 120, 0.95), rgba(139, 0, 0, 0.5) 40%, transparent 70%),
+                linear-gradient(180deg, #190000 0%, #050000 55%, #000000 100%);
         }
 
         * {
@@ -48,34 +51,45 @@
             display: flex;
             flex-direction: column;
             overflow: hidden;
+            position: relative;
             background: var(--bg-primary);
+        }
+
+        .chat-container::before {
+            content: "";
+            position: absolute;
+            inset: 0;
+            background:
+                radial-gradient(circle at 92% -10%, rgba(255, 90, 120, 0.85) 0%, rgba(139, 0, 0, 0.55) 32%, transparent 60%),
+                linear-gradient(165deg, rgba(255, 45, 95, 0.15) 0%, transparent 45%);
+            z-index: 0;
+            pointer-events: none;
+            opacity: 0.95;
+        }
+
+        .chat-container > .chat-header,
+        .chat-container > .chat-box {
+            position: relative;
+            z-index: 1;
         }
 
         /* Chat Header */
         .chat-header {
-            background: var(--bg-primary);
+            background: rgba(0, 0, 0, 0.85);
             border-bottom: 1px solid var(--border-color);
             color: var(--text-primary);
             padding: 1.25rem 1rem;
             text-align: center;
-            z-index: 30;
+            z-index: 1;
             flex-shrink: 0;
             display: flex;
             flex-direction: column;
             align-items: center;
             justify-content: center;
+            position: relative;
+            backdrop-filter: blur(12px);
+            box-shadow: 0 10px 35px rgba(220, 20, 60, 0.25);
         }
-        
-        #signal-light {
-            width: 12px;
-            height: 12px;
-            border-radius: 50%;
-            background-color: currentColor;
-            transition: color 0.3s ease;
-        }
-        #signal-light.red { color: #ef4444; }
-        #signal-light.yellow { color: #facc15; }
-        #signal-light.green { color: #10b981; }
 
         .profile-link {
             font-size: 0.8rem;
@@ -87,7 +101,7 @@
             align-items: center;
         }
         .profile-link:hover {
-            color: var(--text-primary);
+            color: var(--accent-red);
         }
 
         /* Chat messages area */
@@ -97,7 +111,7 @@
             padding-bottom: calc(1rem + 6rem + env(safe-area-inset-bottom, 0));
             overflow-y: auto;
             scroll-behavior: smooth;
-            background: var(--bg-primary);
+            background: transparent;
         }
 
         /* Simple message bubbles */
@@ -121,6 +135,7 @@
             color: var(--text-primary); 
             margin-left: auto; 
             border-bottom-right-radius: 0.5rem;
+            border: 1px solid var(--border-color);
         }
 
         .emon { 
@@ -128,6 +143,7 @@
             color: var(--text-primary); 
             margin-right: auto; 
             border-bottom-left-radius: 0.5rem;
+            border: 1px solid var(--border-color);
         }
 
         .message:hover {
@@ -213,7 +229,7 @@
         }
         
         .message-input-wrapper:focus-within {
-            border-color: #007AFF;
+            border-color: var(--accent-red);
         }
 
         .message-input { 
@@ -251,7 +267,7 @@
         }
 
         .send-button { 
-            background: #007AFF; 
+            background: var(--accent-red); 
             color: white;
         }
         
@@ -365,7 +381,7 @@
         }
 
         .close-modal-btn:hover { 
-            background: #ef4444; 
+            background: var(--accent-red); 
         }
 
         .date-separator span {
@@ -392,7 +408,7 @@
         }
         
         .chat-box::-webkit-scrollbar-thumb:hover { 
-            background: var(--text-secondary); 
+            background: var(--accent-red); 
         }
 
         .file-message { 
@@ -414,14 +430,14 @@
         .file-icon { 
             font-size: 1.5rem; 
             margin-right: 0.75rem; 
-            color: var(--text-primary); 
+            color: var(--accent-red); 
         }
         
         .reply-preview { 
             padding: 0.5rem 0.75rem; 
             margin-bottom: 0.5rem; 
             border-radius: 0.75rem; 
-            background: rgba(255,255,255,0.1); 
+            background: rgba(139, 0, 0, 0.2); 
             display: flex; 
             gap: 0.5rem; 
             border: 1px solid var(--border-color);
@@ -429,7 +445,7 @@
         
         .reply-bar { 
             width: 2px; 
-            background-color: #007AFF; 
+            background-color: var(--accent-red); 
             border-radius: 1px; 
             flex-shrink: 0; 
         }
@@ -446,7 +462,7 @@
         
         .reply-sender { 
             font-weight: 600; 
-            color: #007AFF; 
+            color: var(--accent-red); 
         }
         
         .message.emon .reply-sender { 
@@ -524,7 +540,7 @@
         emoji-picker {
             --background: var(--input-bg);
             --border-color: var(--border-color);
-            --outline-color: #007AFF;
+            --outline-color: var(--accent-red);
             --text-color: var(--text-primary);
             --secondary-text-color: var(--text-secondary);
             --border-radius: 1rem;
@@ -552,7 +568,6 @@
     <div class="chat-header">
         <div class="flex items-center justify-center gap-3 mb-1">
             <h3 class="font-bold text-xl tracking-wide">Emon</h3>
-            <span id="signal-light"></span>
         </div>
         <a href="https://emoneditz.github.io/about-me/" target="_blank" class="profile-link">
             <i class="fas fa-user-circle mr-1"></i> View Profile
@@ -682,17 +697,6 @@
     let activeMessageElement = null;
     let activeReplyMessage = null;
     const defaultReactions = ['🤣', '❤️', '👍', '👎', '🔥', '🥰'];
-    
-    let replyTimer = null; 
-    let isConnectionActive = false;
-    
-    function setSignalLight(color) {
-        const light = document.getElementById('signal-light');
-        light.className = '';
-        if (color) {
-            light.classList.add(color);
-        }
-    }
 
     function loadChatHistory() {
         const storedHistory = localStorage.getItem('chatHistory');
@@ -1010,12 +1014,6 @@
         if (file) { await sendFile(); return; }
         if (!message) return;
         
-        if (!isConnectionActive) {
-            clearTimeout(replyTimer);
-            setSignalLight('yellow');
-            replyTimer = setTimeout(() => { setSignalLight('red'); }, 30000);
-        }
-        
         const replyToId = activeReplyMessage ? activeReplyMessage.id : null;
         let fetchBody = { text: message };
         if(activeReplyMessage && activeReplyMessage.telegramMessageId) {
@@ -1037,7 +1035,6 @@
             sentMessageData.telegramMessageId = data.result.message_id;
             saveChatHistory();
         } catch(err) {
-            isConnectionActive = false; clearTimeout(replyTimer); setSignalLight('red');
             showSentStatus('Failed to send message', 'error');
         }
     }
@@ -1050,11 +1047,6 @@
     async function sendFile() {
         const file = fileInput.files[0];
         if (!file) { showSentStatus('No file selected!', 'error'); return; }
-        if (!isConnectionActive) {
-            clearTimeout(replyTimer);
-            setSignalLight('yellow');
-            replyTimer = setTimeout(() => { setSignalLight('red'); }, 30000);
-        }
         const caption = messageInput.value.trim();
         const mediaType = file.type.startsWith('image/') ? 'image' : (file.type.startsWith('video/') ? 'video' : 'document');
         const replyToId = activeReplyMessage ? activeReplyMessage.id : null;
@@ -1077,7 +1069,6 @@
             sentMessageData.telegramMessageId = data.result.message_id;
             saveChatHistory();
         } catch(err) {
-            isConnectionActive = false; clearTimeout(replyTimer); setSignalLight('red');
             showSentStatus('Upload failed', 'error');
         }
         clearFileSelection();
@@ -1101,13 +1092,10 @@
 
             pollRetryDelay = 1000; 
             if (data.ok && data.result.length > 0) {
-                let hadUpdateFromEmon = false;
                 for (const update of data.result) {
                     lastUpdateId = update.update_id;
                     const msg = update.message;
                     const reaction = update.message_reaction;
-                    const isRelevantUpdate = (msg && msg.from.id === EMON_ID) || (reaction && reaction.user.id === EMON_ID);
-                    if(isRelevantUpdate) hadUpdateFromEmon = true;
                     if(msg && msg.from.id === EMON_ID) {
                         if (msg.text && msg.text.includes("MESSAGE HAS BEEN DELETED")) continue;
                         const text = msg.text || msg.caption || '';
@@ -1144,14 +1132,9 @@
                         }
                     }
                 }
-                if (hadUpdateFromEmon) {
-                     isConnectionActive = true; clearTimeout(replyTimer); setSignalLight('green');
-                }
             }
             pollMessages();
         } catch (err) {
-            isConnectionActive = false;
-            if (!replyTimer) setSignalLight('red'); 
             console.error('Polling error:', err);
             setTimeout(pollMessages, pollRetryDelay);
             pollRetryDelay = Math.min(pollRetryDelay * 2, MAX_POLL_RETRY_DELAY);
@@ -1187,7 +1170,6 @@
     loadChatHistory();
     pollMessages();
     updateSendButton();
-    setSignalLight('yellow'); 
 </script>
 
 </body>
