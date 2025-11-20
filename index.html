@@ -130,6 +130,12 @@
             cursor: pointer;
         }
 
+        .message.selected {
+            border-color: var(--accent-red);
+            box-shadow: 0 10px 25px rgba(220, 20, 60, 0.35);
+            transform: translateY(-2px);
+        }
+
         .me { 
             background: var(--bubble-me);
             color: var(--text-primary); 
@@ -888,7 +894,11 @@
     }
 
     function openMessageActionMenu(messageEl) {
+        if (activeMessageElement && activeMessageElement !== messageEl) {
+            activeMessageElement.classList.remove('selected');
+        }
         activeMessageElement = messageEl;
+        messageEl.classList.add('selected');
         messageActionMenu.classList.remove('hidden');
         const rect = messageEl.getBoundingClientRect();
         const menuHeight = messageActionMenu.offsetHeight;
@@ -909,6 +919,9 @@
     function closeMessageActionMenu() {
         if (!messageActionMenu.classList.contains('hidden')) {
             messageActionMenu.classList.add('hidden');
+        }
+        if (activeMessageElement) {
+            activeMessageElement.classList.remove('selected');
             activeMessageElement = null;
         }
         emojiPickerContainer.classList.add('hidden');
