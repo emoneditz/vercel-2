@@ -1,0 +1,234 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Website Deleted</title>
+
+  <!-- Font & Icons -->
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" rel="stylesheet">
+
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: 'Inter', sans-serif;
+    }
+
+    body {
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: radial-gradient(circle at top, #111827, #020617);
+      color: #e5e7eb;
+      overflow-x: hidden;
+    }
+
+    .container {
+      text-align: center;
+      padding: 40px 24px;
+      max-width: 720px;
+      animation: fadeIn 1.2s ease;
+    }
+
+    h1 {
+      font-size: clamp(2.2rem, 5vw, 3.2rem);
+      font-weight: 700;
+      margin-bottom: 16px;
+    }
+
+    h1 span {
+      background: linear-gradient(90deg, #38bdf8, #a78bfa, #22d3ee);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+
+    p {
+      color: #9ca3af;
+      margin-bottom: 40px;
+      line-height: 1.6;
+    }
+
+    .glow-btn {
+      position: relative;
+      display: inline-block;
+      padding: 16px 44px;
+      font-weight: 600;
+      color: #020617;
+      background: linear-gradient(90deg, #38bdf8, #a78bfa, #22d3ee);
+      border-radius: 999px;
+      border: none;
+      cursor: pointer;
+      box-shadow: 0 0 25px rgba(56,189,248,.45);
+      transition: .3s ease;
+    }
+
+    .glow-btn::before {
+      content: "";
+      position: absolute;
+      inset: -4px;
+      background: linear-gradient(90deg, #38bdf8, #a78bfa, #22d3ee);
+      filter: blur(18px);
+      border-radius: 999px;
+      z-index: -1;
+      animation: pulse 2.8s infinite;
+    }
+
+    .glow-btn:hover {
+      transform: scale(1.05);
+      box-shadow: 0 0 40px rgba(167,139,250,.75);
+    }
+
+    footer {
+      margin-top: 48px;
+      font-size: .85rem;
+      color: #6b7280;
+    }
+
+    /* MODAL */
+    #contact-modal {
+      position: fixed;
+      inset: 0;
+      background: rgba(2,6,23,.75);
+      backdrop-filter: blur(14px);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      opacity: 0;
+      pointer-events: none;
+      transform: scale(1.05);
+      transition: .4s ease;
+      z-index: 50;
+    }
+
+    #contact-modal.active {
+      opacity: 1;
+      pointer-events: auto;
+      transform: scale(1);
+    }
+
+    /* CARDS */
+    .links {
+      width: 100%;
+      max-width: 720px;
+      padding: 20px;
+    }
+
+    .link-card {
+      background: rgba(255,255,255,.05);
+      border-radius: 16px;
+      padding: 20px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 16px;
+      backdrop-filter: blur(10px);
+      animation: popUp .6s ease both;
+    }
+
+    .link-card i {
+      font-size: 1.8rem;
+      margin-right: 14px;
+    }
+
+    .link-left {
+      display: flex;
+      align-items: center;
+    }
+
+    .link-card a {
+      color: white;
+      text-decoration: none;
+      font-weight: 600;
+      padding: 10px 18px;
+      border-radius: 999px;
+      background: linear-gradient(90deg,#38bdf8,#a78bfa);
+      transition: .3s;
+    }
+
+    .link-card a:hover {
+      transform: scale(1.05);
+    }
+
+    .link-card:nth-child(1){animation-delay:.1s}
+    .link-card:nth-child(2){animation-delay:.2s}
+    .link-card:nth-child(3){animation-delay:.3s}
+    .link-card:nth-child(4){animation-delay:.4s}
+    .link-card:nth-child(5){animation-delay:.5s}
+    .link-card:nth-child(6){animation-delay:.6s}
+
+    @keyframes popUp {
+      from {opacity:0; transform:translateY(30px) scale(.95)}
+      to {opacity:1; transform:none}
+    }
+
+    @keyframes pulse {
+      0%,100%{opacity:.6}
+      50%{opacity:1}
+    }
+
+    @keyframes fadeIn {
+      from {opacity:0; transform:translateY(10px)}
+      to {opacity:1; transform:none}
+    }
+  </style>
+</head>
+
+<body>
+
+<div class="container">
+  <h1><span>Website</span> Has Been Deleted</h1>
+  <p>This website is no longer available. If you believe this is a mistake or want to reach me, tap below.</p>
+  <button id="open-contact" class="glow-btn">Contact Owner</button>
+  <footer>© 2026 · All rights reserved</footer>
+</div>
+
+<!-- CONTACT MODAL -->
+<div id="contact-modal">
+  <div class="links">
+    <div class="link-card">
+      <div class="link-left"><i class="fab fa-instagram"></i>Instagram</div>
+      <a href="https://www.instagram.com/emon_editz69" target="_blank">Open</a>
+    </div>
+
+    <div class="link-card">
+      <div class="link-left"><i class="fab fa-twitter"></i>X (Twitter)</div>
+      <a href="https://x.com/emon3xprime" target="_blank">Open</a>
+    </div>
+
+    <div class="link-card">
+      <div class="link-left"><i class="fab fa-pinterest"></i>Pinterest</div>
+      <a href="https://pin.it/7bdXGMclR" target="_blank">Open</a>
+    </div>
+
+    <div class="link-card">
+      <div class="link-left"><i class="fab fa-facebook"></i>Facebook</div>
+      <a href="https://www.facebook.com/emoneditz69" target="_blank">Open</a>
+    </div>
+
+    <div class="link-card">
+      <div class="link-left"><i class="fab fa-discord"></i>Discord</div>
+      <a href="https://discordapp.com/users/_emon_" target="_blank">Open</a>
+    </div>
+
+    <div class="link-card">
+      <div class="link-left"><i class="fas fa-envelope"></i>Email</div>
+      <a href="mailto:annihilation497837@gmail.com">Send</a>
+    </div>
+  </div>
+</div>
+
+<script>
+  const openBtn = document.getElementById("open-contact");
+  const modal = document.getElementById("contact-modal");
+
+  openBtn.onclick = () => modal.classList.add("active");
+  modal.onclick = e => { if (e.target === modal) modal.classList.remove("active"); }
+  document.addEventListener("keydown", e => { if (e.key === "Escape") modal.classList.remove("active"); });
+</script>
+
+</body>
+</html>
